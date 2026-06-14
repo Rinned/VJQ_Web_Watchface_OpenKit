@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=360,user-scalable=no">
+  <style>
+    html, body { margin:0; width:100%; height:100%; background:#000; overflow:hidden; }
+    canvas{position:fixed;left:50%;top:50%;width:360px;height:360px;margin-left:-180px;margin-top:-180px;display:block;background:#000;}
+  </style>
+</head>
+<body>
+
+<canvas id="c" width="360" height="360"></canvas>
+<script>
+(function(){
+  var c=document.getElementById('c');
+  var gl=c.getContext('webgl',{antialias:true,alpha:false,preserveDrawingBuffer:true}) || c.getContext('experimental-webgl',{antialias:true,alpha:false,preserveDrawingBuffer:true});
+  if(!gl){
+    var ctx=c.getContext('2d');
+    ctx.fillStyle='#000';ctx.fillRect(0,0,360,360);
+    ctx.fillStyle='#f00';ctx.fillRect(175,175,10,10);
+    return;
+  }
+  var vs='attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}';
+  var fs='precision mediump float;void main(){gl_FragColor=vec4(0.459,0.400,0.267,1.0);}';
+  function sh(type,src){var s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s;}
+  var pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,vs));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,fs));gl.linkProgram(pr);gl.useProgram(pr);
+  var verts=[];
+  var cx=180, cy=180, r0=175.2, r1=176.8;
+  function ndc(x,y){return [(x/180)-1,1-(y/180)];}
+  for(var i=0;i<=360;i++){
+    var a=(i-90)*Math.PI/180, co=Math.cos(a), si=Math.sin(a);
+    var p0=ndc(cx+co*r0, cy+si*r0), p1=ndc(cx+co*r1, cy+si*r1);
+    verts.push(p0[0],p0[1],p1[0],p1[1]);
+  }
+  var b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(verts),gl.STATIC_DRAW);
+  var loc=gl.getAttribLocation(pr,'p');gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+  gl.viewport(0,0,360,360);gl.clearColor(0,0,0,1);gl.clear(gl.COLOR_BUFFER_BIT);gl.drawArrays(gl.TRIANGLE_STRIP,0,verts.length/2);
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Build and verification output
+vjq_r_shell_build/
+verification_pulls/
+screenshots/
+*.log
+*_payload.log
+*_payload_texture.txt
+*_report.txt
+*_report.md
+
+# Watchface packages and private assets
+*.tpk
+*.wgt
+*.apk
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+*.bmp
+
+# Certificates, keys, and account material
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.cer
+*.crt
+*.der
+*.pem
+*.key
+
+# Compiled helpers / binaries
+*.exe
+*.dll
+*.so
+*.o
+fake_gdbserver_*
+!fake_gdbserver_*.c
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

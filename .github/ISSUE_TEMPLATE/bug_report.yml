@@ -1,0 +1,36 @@
+name: Bug report
+description: Report a reproducible problem with the toolkit
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Watch model, Tizen version, Windows version, Python version, and Tizen Studio/sdb path.
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Command
+      description: Paste the exact command, without private paths or secrets.
+      render: powershell
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Paste relevant terminal output. Remove device identifiers if desired.
+      render: text
+    validations:
+      required: false
+
